@@ -3,185 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Drag Hs Dasboard | Namz Free</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+    <title>NAMZ | OS QUANTUM TERMINAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.5);
-            --bg-dark: #060608;
-            --card-bg: rgba(15, 15, 20, 0.85);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: rgba(255, 255, 255, 0.06);
-            --success: #10b981;
+            --primary: #00d4ff;
+            --secondary: #0051ff;
+            --dark-deep: #02040a;
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: var(--bg-dark); font-family: 'Inter', sans-serif; color: var(--text-main); overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 1; top: 0; left: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
-        /* --- UI LOGIN --- */
-        #login-overlay { position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; z-index: 100; background: radial-gradient(circle at center, #101015 0%, #030303 100%); transition: 0.6s; }
-        .login-card { width: 100%; max-width: 380px; padding: 50px 40px; background: var(--card-bg); backdrop-filter: blur(20px); border-radius: 28px; border: 1px solid var(--border); text-align: center; position: relative; z-index: 101; }
-        .brand-logo-text { font-family: 'Fira Code', monospace; font-size: 20px; color: var(--primary); background: rgba(99, 102, 241, 0.1); padding: 8px 18px; border-radius: 12px; display: inline-block; margin-bottom: 24px; border: 1px solid rgba(99, 102, 241, 0.2); }
-        .login-input { width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border); border-radius: 14px; color: white; margin-bottom: 20px; outline: none; text-align: center; font-family: 'Fira Code'; }
-        .login-btn { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 14px; color: white; font-weight: 600; cursor: pointer; transition: 0.3s; font-family: 'Space Grotesk'; letter-spacing: 1px; }
-        .login-btn:hover { background: #4f46e5; transform: translateY(-2px); box-shadow: 0 10px 20px var(--primary-glow); }
-
-        /* --- DASHBOARD UI --- */
-        #main-content { display: none; z-index: 10; width: 100%; max-width: 480px; animation: slideUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); padding: 20px; }
-        .pro-card { background: var(--card-bg); backdrop-filter: blur(20px); padding: 40px; border-radius: 32px; border: 1px solid var(--border); box-shadow: 0 40px 80px rgba(0,0,0,0.7); position: relative; overflow: hidden; }
-        
-        .status-pill { display: inline-flex; align-items: center; gap: 7px; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 6px 14px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .status-dot { width: 6px; height: 6px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
-        .dashboard-title { font-family: 'Space Grotesk', sans-serif; font-size: 32px; margin: 0 0 30px; font-weight: 700; text-align: center; letter-spacing: -1px; }
-
-        /* --- DOWNLOAD AREA --- */
-        .download-console {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 24px;
-            padding: 25px;
-            border: 1px solid var(--border);
-            margin-bottom: 10px;
+        body {
+            background-color: var(--dark-deep);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .console-header {
+        /* Particles HD Background */
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            background: radial-gradient(circle at center, #0a1128 0%, #02040a 100%);
+        }
+
+        /* Jendela Komputer (Glassmorphism) */
+        .pc-window {
+            position: relative;
+            z-index: 10;
+            width: 500px;
+            background: rgba(10, 20, 40, 0.4);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 
+                        inset 0 0 20px rgba(0, 212, 255, 0.05);
+            animation: bootUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes bootUp {
+            from { opacity: 0; transform: scale(0.8) translateY(50px); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        /* Window Header */
+        .window-header {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--glass-border);
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
-            color: var(--text-dim);
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f57; }
+        .yellow { background: #febc2e; }
+        .green { background: #28c840; }
+
+        .header-title {
+            font-size: 11px;
             font-family: 'Fira Code', monospace;
-            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        /* Content Area */
+        .window-body {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .brand {
+            font-weight: 700;
+            font-size: 42px;
+            letter-spacing: -2px;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .system-status {
+            font-family: 'Fira Code', monospace;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+        }
+
+        /* Input Cyber */
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Fira Code';
+            outline: none;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Button OS */
+        .btn-exe {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s ease;
         }
 
-        .file-info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
+        .btn-exe:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Dashboard View */
+        #dashboard { display: none; text-align: left; }
+
+        .info-row {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 13px;
         }
 
-        .file-label { color: var(--text-dim); font-weight: 400; }
-        .file-value { color: var(--text-main); font-weight: 600; }
-        .file-value.indigo { color: var(--primary); }
+        .label { color: var(--primary); margin-right: 10px; }
 
-        .btn-download {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            padding: 20px;
-            background: #ffffff;
-            color: #000000;
-            border-radius: 18px;
-            text-decoration: none;
-            font-weight: 700;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 16px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 20px;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-5px);
-            background: var(--primary);
-            color: #ffffff;
-            box-shadow: 0 15px 30px var(--primary-glow);
-        }
-
-        .btn-tutorial {
+        .dl-trigger {
+            margin-top: 25px;
             display: block;
             text-align: center;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
             padding: 15px;
-            color: var(--text-dim);
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
+            border-radius: 8px;
+            font-weight: 600;
             transition: 0.3s;
-            margin-top: 10px;
         }
 
-        .btn-tutorial:hover { color: var(--text-main); letter-spacing: 1px; }
+        .dl-trigger:hover { background: var(--primary); color: black; }
 
-        .security-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 10px;
-            color: var(--success);
-            margin-top: 25px;
-            font-family: 'Fira Code', monospace;
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .shake { animation: shake 0.4s ease; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
     </style>
 </head>
 <body>
 
     <div id="particles-js"></div>
 
-    <div id="login-overlay">
-        <div class="login-card" id="login-card">
-            <div class="brand-logo-text">EASY DRAG FREE NAMZ</div>
-            <h2 style="font-family: 'Space Grotesk'; margin-bottom: 10px;">Security Access</h2>
-            <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 30px;">Buy File Versi Premium join saluran</p>
-            <input type="text" id="license-key" class="login-input" placeholder="PASTE KEY HERE" autocomplete="off">
-            <button class="login-btn" onclick="checkLogin()">AUTHORIZE SYSTEM</button>
-            <div style="margin-top: 25px; font-size: 11px; color: #444; text-transform: uppercase; letter-spacing: 1px;">No Access? <a href="https://wa.me/6285741193887" style="color: var(--primary); text-decoration: none; font-weight: 700;">Join Saluran Free</a></div>
+    <div class="pc-window" id="main-win">
+        <div class="window-header">
+            <div class="dots">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="header-title">Kernel_v4.0.system</div>
+            <div></div>
         </div>
-    </div>
 
-    <div id="main-content">
-        <div class="pro-card">
-            <div style="text-align: center;">
-                <div class="status-pill"><div class="status-dot"></div> Connection Encrypted</div>
-                <h1 class="dashboard-title">EASY DRAG FREE</h1>
+        <div class="window-body">
+            
+            <div id="auth-section">
+                <div class="brand">NAMZ OS</div>
+                <div class="system-status">Uptime: 99.9% | RAM: 32GB | Security: Max</div>
+                
+                <div class="input-box">
+                    <input type="text" id="passkey" placeholder="Enter Authentication Key" autocomplete="off">
+                </div>
+
+                <button class="btn-exe" onclick="authenticate()">Initialize Access</button>
             </div>
 
-            <div class="download-console">
-                <div class="console-header">
-                    <span>Package: EASY_DRAG_HS</span>
-                    <span style="color: var(--success);">Verified</span>
-                </div>
-                
-                <div class="file-info-row">
-                    <span class="file-label">Archive Name:</span>
-                    <span class="file-value">EASY_DRAG_HS_FREE.zip</span>
-                </div>
-                <div class="file-info-row">
-                    <span class="file-label">System Type:</span>
-                    <span class="file-value indigo">Easy-Headshot Engine</span>
-                </div>
-                <div class="file-info-row">
-                    <span class="file-label">Integrity:</span>
-                    <span class="file-value" style="font-family: 'Fira Code'; font-size: 11px;">SHA-256 Check Passed</span>
-                </div>
-                <div class="file-info-row">
-                    <span class="file-label">Status:</span>
-                    <span class="file-value" style="color: var(--success);">Ready for Extraction</span>
-                </div>
+            <div id="dashboard">
+                <h2 style="margin-bottom: 20px; font-size: 18px;">Package Info:</h2>
+                <div class="info-row"><span class="label">></span> NAME: EASY_DRAG_HS_FREE.zip</div>
+                <div class="info-row"><span class="label">></span> BUILD: 2026.03.05_v1</div>
+                <div class="info-row"><span class="label">></span> SOURCE: Global_Mediafire_CDN</div>
+                <div class="info-row"><span class="label">></span> STATUS: Ready to Fetch</div>
 
-                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="btn-download">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    DOWNLOAD APPLICATION
+                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="dl-trigger">
+                    EXECUTE DOWNLOAD
                 </a>
             </div>
-            
-           
-            </a>
 
-            <div class="security-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                PROTECTED BY NAMZ_ SECURE CLOUD
-            </div>
         </div>
     </div>
 
@@ -189,33 +224,43 @@
     <script>
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": ["#6366f1", "#ffffff"] },
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00d4ff" },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 0.4, "random": true },
-                "size": { "value": 2 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#6366f1", "opacity": 0.15, "width": 1 },
-                "move": { "enable": true, "speed": 1.2, "direction": "none", "random": true, "out_mode": "out" }
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 2, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00d4ff", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
             },
             "interactivity": {
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }
-            }
+                "detect_on": "canvas",
+                "events": { 
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true 
+                },
+                "modes": { 
+                    "grab": { "distance": 140, "line_linked": { "opacity": 1 } }
+                }
+            },
+            "retina_detect": true
         });
 
-        function checkLogin() {
-            const key = document.getElementById('license-key').value;
-            const validKeys = ["2026", "TRIAL-FREE"];
-            
-            if (validKeys.includes(key)) {
-                document.getElementById('login-overlay').style.opacity = '0';
+        function authenticate() {
+            const key = document.getElementById('passkey').value;
+            const valid = ["2026", "TRIAL", "ADMIN"];
+
+            if (valid.includes(key)) {
+                const win = document.getElementById('main-win');
+                win.style.transform = "scale(0.98)";
+                
                 setTimeout(() => {
-                    document.getElementById('login-overlay').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';
-                }, 600);
+                    document.getElementById('auth-section').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    win.style.transform = "scale(1)";
+                }, 400);
             } else {
-                const card = document.getElementById('login-card');
-                card.classList.add('shake');
-                setTimeout(() => card.classList.remove('shake'), 400);
+                alert("ACCESS DENIED: Kernel Mismatch!");
             }
         }
     </script>
