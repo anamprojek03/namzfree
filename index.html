@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAMZ EASY DRAG | OS QUANTUM TERMINAL</title>
+    <title>NAMZ | EASY DRAG FREE</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00d4ff;
-            --secondary: #0051ff;
-            --dark-deep: #02040a;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #bc13fe;
+            --glass: rgba(10, 20, 40, 0.6);
+            --border: rgba(255, 255, 255, 0.1);
+            --danger: #ff5f57;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
         body {
-            background-color: var(--dark-deep);
+            background: #02040a;
             color: white;
             font-family: 'Space Grotesk', sans-serif;
             height: 100vh;
@@ -26,154 +27,115 @@
             align-items: center;
         }
 
-        /* Particles HD Background */
-        #particles-js {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            background: radial-gradient(circle at center, #0a1128 0%, #02040a 100%);
-        }
+        /* --- BACKGROUND PARTIKEL --- */
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-        /* Jendela Komputer (Glassmorphism) */
+        /* --- JAM DI TENGAH ATAS --- */
+        .clock-widget {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 40px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+        }
+        #time { font-size: 32px; font-weight: 700; letter-spacing: 2px; }
+        #date { font-size: 11px; color: var(--primary); letter-spacing: 3px; }
+
+        /* --- JENDELA PC UTAMA --- */
         .pc-window {
             position: relative;
             z-index: 10;
-            width: 500px;
-            background: rgba(10, 20, 40, 0.4);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 
-                        inset 0 0 20px rgba(0, 212, 255, 0.05);
-            animation: bootUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 520px;
+            margin-top: 60px;
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 50px 150px rgba(0, 0, 0, 0.9);
+            animation: bootAnim 1s cubic-bezier(0.19, 1, 0.22, 1);
+            overflow: hidden;
         }
 
-        @keyframes bootUp {
-            from { opacity: 0; transform: scale(0.8) translateY(50px); filter: blur(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-        }
+        @keyframes bootAnim { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* Window Header */
         .window-header {
-            padding: 12px 20px;
+            padding: 15px 25px;
             background: rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         .dots { display: flex; gap: 8px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .red { background: #ff5f57; }
-        .yellow { background: #febc2e; }
-        .green { background: #28c840; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: var(--danger); } .yellow { background: #febc2e; } .green { background: #28c840; }
 
-        .header-title {
-            font-size: 11px;
-            font-family: 'Fira Code', monospace;
-            letter-spacing: 2px;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
-
-        /* Content Area */
-        .window-body {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .brand {
-            font-weight: 700;
-            font-size: 42px;
-            letter-spacing: -2px;
-            margin-bottom: 5px;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .system-status {
-            font-family: 'Fira Code', monospace;
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 40px;
-        }
-
-        /* Input Cyber */
-        .input-box {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
+        .window-body { padding: 40px; text-align: center; }
+        .brand { font-size: 45px; font-weight: 700; letter-spacing: -2px; background: linear-gradient(45deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
+        
         input {
-            width: 100%;
-            padding: 18px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Fira Code';
-            outline: none;
-            transition: 0.3s;
-            text-align: center;
+            width: 100%; padding: 18px; background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border); border-radius: 12px;
+            color: white; font-family: 'Fira Code'; outline: none;
+            transition: 0.3s; text-align: center; margin-bottom: 15px;
         }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
 
-        input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
-        }
-
-        /* Button OS */
         .btn-exe {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: 0.3s ease;
+            width: 100%; padding: 18px; background: var(--primary);
+            color: #000; border: none; border-radius: 12px;
+            font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.4s;
+            margin-bottom: 15px;
         }
+        .btn-exe:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4); }
 
-        .btn-exe:hover {
-            background: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
-        }
-
-        /* Dashboard View */
-        #dashboard { display: none; text-align: left; }
-
-        .info-row {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        /* --- TEKS BELI KEY --- */
+        .buy-notice {
             font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 30px;
         }
-
-        .label { color: var(--primary); margin-right: 10px; }
-
-        .dl-trigger {
-            margin-top: 25px;
-            display: block;
-            text-align: center;
-            background: transparent;
-            border: 1px solid var(--primary);
+        .buy-notice a {
             color: var(--primary);
-            padding: 15px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.3s;
+            font-weight: bold;
         }
 
-        .dl-trigger:hover { background: var(--primary); color: black; }
+        /* --- MONITOR CPU/GPU INTEGRATED --- */
+        .system-monitor-integrated {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .stat-item { margin-bottom: 5px; }
+        .stat-label { font-family: 'Fira Code'; font-size: 9px; color: var(--primary); display: flex; justify-content: space-between; margin-bottom: 6px; text-transform: uppercase; }
+        .stat-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1.5s ease-in-out; }
+
+        /* --- DASHBOARD VIEW --- */
+        #dashboard { display: none; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; text-align: left; }
+        .data-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; }
+        .data-label { font-size: 9px; color: var(--primary); text-transform: uppercase; margin-bottom: 4px; }
+
+        .dl-final { display: block; width: 100%; padding: 18px; background: transparent; border: 1px solid var(--primary); color: var(--primary); text-align: center; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-bottom: 25px; }
+        .dl-final:hover { background: var(--primary); color: #000; }
+
+        /* --- TASKBAR --- */
+        .taskbar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; display: flex; gap: 15px; z-index: 100; }
+        .task-icon { width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-size: 18px; }
+        .task-icon:hover { transform: translateY(-8px); background: var(--primary); color: black; }
 
     </style>
 </head>
@@ -181,89 +143,122 @@
 
     <div id="particles-js"></div>
 
+    <div class="clock-widget">
+        <div id="time">00:00:00</div>
+        <div id="date">LOADING_OS...</div>
+    </div>
+
     <div class="pc-window" id="main-win">
         <div class="window-header">
-            <div class="dots">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-            </div>
-            <div class="header-title">Easy Drag_v4.0.system</div>
-            <div></div>
+            <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+            <div style="font-family: 'Fira Code'; font-size: 10px; color: var(--primary);">EASY DRAG FREE NAMZ</div>
+            <div style="width: 40px;"></div>
         </div>
-
+        
         <div class="window-body">
             
             <div id="auth-section">
                 <div class="brand">NAMZ OS</div>
-                <div class="system-status">Uptime: 99.9% | RAM: 32GB | Security: Max</div>
+                <input type="password" id="key" placeholder="ENTER ACCESS KEY" autocomplete="off">
+                <button class="btn-exe" onclick="login()">LOG IN SYSTEM</button>
                 
-                <div class="input-box">
-                    <input type="text" id="passkey" placeholder="Enter Authentication Key" autocomplete="off">
+                <div class="buy-notice">
+                    Join Saluran Buat Info Update <a href="https://whatsapp.com/channel/0029VakFTZvEquiPkaGoKl0e" target="_blank">JOIN SEKARANG</a>
                 </div>
-
-                <button class="btn-exe" onclick="authenticate()">Initialize Access</button>
             </div>
 
             <div id="dashboard">
-                <h2 style="margin-bottom: 20px; font-size: 18px;">Package Info:</h2>
-                <div class="info-row"><span class="label">></span> NAME: EASY_DRAG_HS_FREE.zip</div>
-                <div class="info-row"><span class="label">></span> BUILD: 2026.03.05_v1</div>
-                <div class="info-row"><span class="label">></span> SOURCE: Global_Mediafire_CDN</div>
-                <div class="info-row"><span class="label">></span> STATUS: Ready to Fetch</div>
+                <div class="brand" style="font-size: 32px; margin-bottom: 15px;">WELCOME BUYER</div>
+                <div class="data-grid">
+                    <div class="data-item"><div class="data-label">File</div>EASY_DRAG_HS.zip</div>
+                    <div class="data-item"><div class="data-label">Status</div>READY</div>
+                    <div class="data-item"><div class="data-label">Version</div>2026_STABLE</div>
+                    <div class="data-item"><div class="data-label">Security</div>ENCRYPTED</div>
+                </div>
+                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="dl-final">DOWNLOAD NOW</a>
+            </div>
 
-                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="dl-trigger">
-                    EXECUTE DOWNLOAD
-                </a>
+            <div class="system-monitor-integrated">
+                <div class="stat-item">
+                    <div class="stat-label"><span>CPU</span><span id="cpu-val">--%</span></div>
+                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="cpu-bar"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label"><span>GPU</span><span id="gpu-val">--°C</span></div>
+                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="gpu-bar" style="background: var(--accent);"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label"><span>RAM</span><span id="ram-val">--GB</span></div>
+                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="ram-bar"></div></div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label"><span>PING</span><span id="net-val">--MS</span></div>
+                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="net-bar" style="background: #28c840;"></div></div>
+                </div>
             </div>
 
         </div>
     </div>
 
+    <div class="taskbar">
+        <div class="task-icon">🖥️</div>
+        <div class="task-icon">📂</div>
+        <div class="task-icon">🛠️</div>
+        <div class="task-icon">🔐</div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // KONFIGURASI PARTIKEL (DIPERBANYAK)
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#00d4ff" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true },
-                "size": { "value": 2, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00d4ff", "opacity": 0.2, "width": 1 },
-                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+                "opacity": { "value": 0.4 },
+                "size": { "value": 2 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00d4ff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1.5 }
             },
             "interactivity": {
-                "detect_on": "canvas",
-                "events": { 
-                    "onhover": { "enable": true, "mode": "grab" },
-                    "onclick": { "enable": true, "mode": "push" },
-                    "resize": true 
-                },
-                "modes": { 
-                    "grab": { "distance": 140, "line_linked": { "opacity": 1 } }
-                }
-            },
-            "retina_detect": true
+                "events": { "onhover": { "enable": true, "mode": "grab" } }
+            }
         });
 
-        function authenticate() {
-            const key = document.getElementById('passkey').value;
-            const valid = ["2026", "TRIAL", "ADMIN"];
+        // JAM LOGIC
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('time').innerText = now.toLocaleTimeString('id-ID', {hour12: false});
+            document.getElementById('date').innerText = now.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
+        }
+        setInterval(updateClock, 1000); updateClock();
 
-            if (valid.includes(key)) {
-                const win = document.getElementById('main-win');
-                win.style.transform = "scale(0.98)";
-                
-                setTimeout(() => {
-                    document.getElementById('auth-section').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
-                    win.style.transform = "scale(1)";
-                }, 400);
-            } else {
-                alert("ACCESS DENIED: Kernel Mismatch!");
-            }
+        // SIMULASI CPU/GPU
+        function updateStats() {
+            const cpu = Math.floor(Math.random() * 40 + 10);
+            const gpu = Math.floor(Math.random() * 30 + 40);
+            const ram = (Math.random() * 2 + 2).toFixed(1);
+            const net = Math.floor(Math.random() * 40 + 10);
+
+            document.getElementById('cpu-bar').style.width = cpu + '%';
+            document.getElementById('cpu-val').innerText = cpu + '%';
+            document.getElementById('gpu-bar').style.width = gpu + '%';
+            document.getElementById('gpu-val').innerText = gpu + '°C';
+            document.getElementById('ram-bar').style.width = (ram*15) + '%';
+            document.getElementById('ram-val').innerText = ram + 'GB';
+            document.getElementById('net-bar').style.width = net + '%';
+            document.getElementById('net-val').innerText = net + 'ms';
+        }
+        setInterval(updateStats, 2000); updateStats();
+
+        // LOGIN LOGIC
+        function login() {
+            const val = document.getElementById('key').value;
+            const valid = ["2026"];
+            if (valid.includes(val.toUpperCase())) {
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else { alert("ACCESS DENIED! JOIN SALURAN DULU BRO."); }
         }
     </script>
 </body>
 </html>
-
