@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAMZ | EASY DRAG FREE</title>
+    <title>NAMZ | EASY OS X-TREME FINAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00d4ff;
             --accent: #bc13fe;
-            --glass: rgba(10, 20, 40, 0.6);
+            --glass: rgba(10, 20, 40, 0.7);
             --border: rgba(255, 255, 255, 0.1);
             --danger: #ff5f57;
         }
@@ -27,238 +27,197 @@
             align-items: center;
         }
 
-        /* --- BACKGROUND PARTIKEL --- */
         #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
 
-        /* --- JAM DI TENGAH ATAS --- */
-        .clock-widget {
-            position: fixed;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 20;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 10px 40px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
+        /* --- NOTIFICATION POPUP --- */
+        #notification {
+            position: fixed; top: 20px; right: -300px;
+            background: var(--glass); border-left: 4px solid var(--primary);
+            padding: 15px 25px; border-radius: 8px; backdrop-filter: blur(10px);
+            z-index: 1000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        #time { font-size: 32px; font-weight: 700; letter-spacing: 2px; }
-        #date { font-size: 11px; color: var(--primary); letter-spacing: 3px; }
 
-        /* --- JENDELA PC UTAMA --- */
+        /* --- CENTERED CLOCK --- */
+        .header-status {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 20; display: flex; align-items: center; gap: 20px;
+            background: var(--glass); padding: 10px 30px; border-radius: 100px;
+            border: 1px solid var(--border); backdrop-filter: blur(15px);
+        }
+        .visualizer { display: flex; gap: 3px; align-items: flex-end; height: 20px; }
+        .bar { width: 3px; background: var(--primary); animation: bounce 1s ease-in-out infinite; }
+        @keyframes bounce { 0%, 100% { height: 5px; } 50% { height: 20px; } }
+
+        /* --- MAIN PC WINDOW --- */
         .pc-window {
-            position: relative;
-            z-index: 10;
-            width: 520px;
-            margin-top: 60px;
-            background: var(--glass);
-            backdrop-filter: blur(40px) saturate(200%);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            box-shadow: 0 50px 150px rgba(0, 0, 0, 0.9);
-            animation: bootAnim 1s cubic-bezier(0.19, 1, 0.22, 1);
-            overflow: hidden;
+            position: relative; z-index: 10; width: 520px;
+            background: var(--glass); backdrop-filter: blur(50px) saturate(210%);
+            border: 1px solid var(--border); border-radius: 30px;
+            box-shadow: 0 0 80px rgba(0, 212, 255, 0.1);
+            animation: boot 1s ease-out;
         }
+        @keyframes boot { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes bootAnim { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        .window-header {
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .dots { display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: var(--danger); } .yellow { background: #febc2e; } .green { background: #28c840; }
-
+        .window-header { padding: 18px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
         .window-body { padding: 40px; text-align: center; }
-        .brand { font-size: 45px; font-weight: 700; letter-spacing: -2px; background: linear-gradient(45deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
+        
+        .brand { font-size: 48px; font-weight: 700; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 25px; }
         
         input {
-            width: 100%; padding: 18px; background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border); border-radius: 12px;
-            color: white; font-family: 'Fira Code'; outline: none;
-            transition: 0.3s; text-align: center; margin-bottom: 15px;
+            width: 100%; padding: 18px; background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border); border-radius: 15px;
+            color: white; text-align: center; margin-bottom: 15px; outline: none; transition: 0.3s;
         }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 212, 255, 0.2); }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
 
         .btn-exe {
             width: 100%; padding: 18px; background: var(--primary);
-            color: #000; border: none; border-radius: 12px;
-            font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.4s;
-            margin-bottom: 15px;
+            color: #000; border: none; border-radius: 15px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; margin-bottom: 15px;
         }
-        .btn-exe:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4); }
+        .btn-exe:hover { transform: scale(1.02); box-shadow: 0 0 30px var(--primary); }
 
-        /* --- TEKS BELI KEY --- */
-        .buy-notice {
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 30px;
-        }
-        .buy-notice a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .buy-notice { font-size: 12px; color: #888; margin-bottom: 25px; }
+        .buy-notice a { color: var(--primary); text-decoration: none; font-weight: bold; }
 
-        /* --- MONITOR CPU/GPU INTEGRATED --- */
-        .system-monitor-integrated {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            text-align: left;
-        }
-
-        .stat-item { margin-bottom: 5px; }
-        .stat-label { font-family: 'Fira Code'; font-size: 9px; color: var(--primary); display: flex; justify-content: space-between; margin-bottom: 6px; text-transform: uppercase; }
-        .stat-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
-        .stat-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1.5s ease-in-out; }
-
-        /* --- DASHBOARD VIEW --- */
-        #dashboard { display: none; }
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; text-align: left; }
+        /* --- DATA GRID DOWNLOAD (SAMA SEPERTI SEBELUMNYA) --- */
+        #dashboard { display: none; text-align: left; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .data-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13px; }
-        .data-label { font-size: 9px; color: var(--primary); text-transform: uppercase; margin-bottom: 4px; }
+        .data-label { font-size: 9px; color: var(--primary); text-transform: uppercase; margin-bottom: 4px; font-family: 'Fira Code'; }
+        
+        .dl-final { display: block; width: 100%; padding: 18px; background: transparent; border: 1px solid var(--primary); color: var(--primary); text-align: center; border-radius: 15px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-bottom: 25px; }
+        .dl-final:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
 
-        .dl-final { display: block; width: 100%; padding: 18px; background: transparent; border: 1px solid var(--primary); color: var(--primary); text-align: center; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; margin-bottom: 25px; }
-        .dl-final:hover { background: var(--primary); color: #000; }
+        /* --- MONITOR SYSTEM --- */
+        .system-monitor-integrated {
+            background: rgba(0, 0, 0, 0.4); border-radius: 20px;
+            padding: 20px; border: 1px solid var(--border);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left;
+        }
+        .stat-label { font-size: 9px; color: var(--primary); margin-bottom: 5px; font-family: 'Fira Code'; }
+        .stat-bar-bg { width: 100%; height: 3px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .stat-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1.5s ease; }
 
         /* --- TASKBAR --- */
-        .taskbar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; display: flex; gap: 15px; z-index: 100; }
-        .task-icon { width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; transition: 0.3s; font-size: 18px; }
-        .task-icon:hover { transform: translateY(-8px); background: var(--primary); color: black; }
-
+        .taskbar { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 100; }
+        .task-icon { width: 45px; height: 45px; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: 0.3s; animation: float 3s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .task-icon:hover { background: var(--primary); color: #000; transform: translateY(-10px); }
     </style>
 </head>
-<body>
+<body onclick="initAudio()">
 
     <div id="particles-js"></div>
 
-    <div class="clock-widget">
-        <div id="time">00:00:00</div>
-        <div id="date">LOADING_OS...</div>
+    <div id="notification"><p id="notif-text" style="font-size: 11px; font-weight: 600; font-family:'Fira Code';">SYSTEM_READY</p></div>
+
+    <div class="header-status">
+        <div class="visualizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+        <div id="time" style="font-family: 'Fira Code'; font-size: 24px;">00:00:00</div>
+        <div class="visualizer" style="transform: scaleX(-1);"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
     </div>
 
     <div class="pc-window" id="main-win">
         <div class="window-header">
-            <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
-            <div style="font-family: 'Fira Code'; font-size: 10px; color: var(--primary);">EASY DRAG FREE NAMZ</div>
-            <div style="width: 40px;"></div>
+            <div style="display: flex; gap: 8px;"><div style="width:12px;height:12px;border-radius:50%;background:#ff5f57"></div><div style="width:12px;height:12px;border-radius:50%;background:#febc2e"></div><div style="width:12px;height:12px;border-radius:50%;background:#28c840"></div></div>
+            <div style="font-family:'Fira Code';font-size:10px;color:var(--primary)">EASY DRAG HS.NAMZ.EXE</div>
+            <div style="width:40px"></div>
         </div>
         
         <div class="window-body">
-            
             <div id="auth-section">
                 <div class="brand">NAMZ OS</div>
-                <input type="password" id="key" placeholder="ENTER ACCESS KEY" autocomplete="off">
-                <button class="btn-exe" onclick="login()">LOG IN SYSTEM</button>
-                
-                <div class="buy-notice">
-                    Join Saluran Buat Info Update <a href="https://whatsapp.com/channel/0029VakFTZvEquiPkaGoKl0e" target="_blank">JOIN SEKARANG</a>
-                </div>
+                <input type="password" id="key" placeholder="IDENTIFICATION_KEY" autocomplete="off">
+                <button class="btn-exe" onclick="login()">INITIALIZE SYSTEM</button>
+                <div class="buy-notice">JOIN SALURAN BUAT INFO FILE FREE <a href="https://whatsapp.com/channel/0029VakFTZvEquiPkaGoKl0e" target="_blank">JOIN SALURAN HERE</a></div>
             </div>
 
             <div id="dashboard">
-                <div class="brand" style="font-size: 32px; margin-bottom: 15px;">WELCOME BUYER</div>
+                <div class="brand" style="font-size: 32px; text-align: center;">ACCESS FILE FREE</div>
                 <div class="data-grid">
-                    <div class="data-item"><div class="data-label">File</div>EASY_DRAG_HS.zip</div>
-                    <div class="data-item"><div class="data-label">Status</div>READY</div>
-                    <div class="data-item"><div class="data-label">Version</div>2026_STABLE</div>
+                    <div class="data-item"><div class="data-label">Filename</div>EASY_DRAG_HS.zip</div>
+                    <div class="data-item"><div class="data-label">STATUS</div>🟢ONLINE</div>
+                    <div class="data-item"><div class="data-label">VERSION</div>CDN_GLOBAL</div>
                     <div class="data-item"><div class="data-label">Security</div>ENCRYPTED</div>
                 </div>
-                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="dl-final">DOWNLOAD NOW</a>
+                <a href="https://www.mediafire.com/file/btnsdtzb0mccqyp/EASY_DRAG_HS_FREE.zip/file" class="dl-final">DOWLOAD FILE</a>
             </div>
 
             <div class="system-monitor-integrated">
-                <div class="stat-item">
-                    <div class="stat-label"><span>CPU</span><span id="cpu-val">--%</span></div>
-                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="cpu-bar"></div></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label"><span>GPU</span><span id="gpu-val">--°C</span></div>
-                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="gpu-bar" style="background: var(--accent);"></div></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label"><span>RAM</span><span id="ram-val">--GB</span></div>
-                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="ram-bar"></div></div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label"><span>PING</span><span id="net-val">--MS</span></div>
-                    <div class="stat-bar-bg"><div class="stat-bar-fill" id="net-bar" style="background: #28c840;"></div></div>
-                </div>
+                <div class="stat-item"><div class="stat-label">CPU <span id="cpu-val">--%</span></div><div class="stat-bar-bg"><div class="stat-bar-fill" id="cpu-bar"></div></div></div>
+                <div class="stat-item"><div class="stat-label">GPU <span id="gpu-val">--°C</span></div><div class="stat-bar-bg"><div class="stat-bar-fill" id="gpu-bar" style="background:var(--accent)"></div></div></div>
+                <div class="stat-item"><div class="stat-label">RAM <span id="ram-val">--GB</span></div><div class="stat-bar-bg"><div class="stat-bar-fill" id="ram-bar"></div></div></div>
+                <div class="stat-item"><div class="stat-label">NET <span id="net-val">--MS</span></div><div class="stat-bar-bg"><div class="stat-bar-fill" id="net-bar" style="background:#28c840"></div></div></div>
             </div>
-
         </div>
     </div>
 
     <div class="taskbar">
-        <div class="task-icon">🖥️</div>
-        <div class="task-icon">📂</div>
-        <div class="task-icon">🛠️</div>
-        <div class="task-icon">🔐</div>
+        <div class="task-icon">🛸</div><div class="task-icon">🛡️</div><div class="task-icon">📡</div><div class="task-icon">⚙️</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // KONFIGURASI PARTIKEL (DIPERBANYAK)
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#00d4ff" },
-                "opacity": { "value": 0.4 },
-                "size": { "value": 2 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#00d4ff", "opacity": 0.1, "width": 1 },
-                "move": { "enable": true, "speed": 1.5 }
-            },
-            "interactivity": {
-                "events": { "onhover": { "enable": true, "mode": "grab" } }
+        // AUDIO SYSTEM
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let audioInitialized = false;
+
+        function playSound(freq, type, duration) {
+            if (!audioInitialized) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function initAudio() { 
+            if(!audioInitialized) { 
+                audioCtx.resume(); audioInitialized = true; 
+                showNotif("NEURAL_LINK_ESTABLISHED");
+                playSound(440, 'sine', 0.5);
             }
-        });
-
-        // JAM LOGIC
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('time').innerText = now.toLocaleTimeString('id-ID', {hour12: false});
-            document.getElementById('date').innerText = now.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
         }
-        setInterval(updateClock, 1000); updateClock();
 
-        // SIMULASI CPU/GPU
-        function updateStats() {
-            const cpu = Math.floor(Math.random() * 40 + 10);
-            const gpu = Math.floor(Math.random() * 30 + 40);
-            const ram = (Math.random() * 2 + 2).toFixed(1);
-            const net = Math.floor(Math.random() * 40 + 10);
-
-            document.getElementById('cpu-bar').style.width = cpu + '%';
-            document.getElementById('cpu-val').innerText = cpu + '%';
-            document.getElementById('gpu-bar').style.width = gpu + '%';
-            document.getElementById('gpu-val').innerText = gpu + '°C';
-            document.getElementById('ram-bar').style.width = (ram*15) + '%';
-            document.getElementById('ram-val').innerText = ram + 'GB';
-            document.getElementById('net-bar').style.width = net + '%';
-            document.getElementById('net-val').innerText = net + 'ms';
+        function showNotif(msg) {
+            const n = document.getElementById('notification');
+            document.getElementById('notif-text').innerText = msg;
+            n.style.right = '20px';
+            setTimeout(() => { n.style.right = '-300px'; }, 3000);
         }
-        setInterval(updateStats, 2000); updateStats();
 
-        // LOGIN LOGIC
+        // PARTICLES
+        particlesJS("particles-js", { "particles": { "number": { "value": 120 }, "color": { "value": "#00d4ff" }, "opacity": { "value": 0.3 }, "size": { "value": 2 }, "line_linked": { "enable": true, "distance": 150, "color": "#00d4ff", "opacity": 0.1, "width": 1 }, "move": { "enable": true, "speed": 1 } } });
+
+        // CLOCK
+        setInterval(() => { document.getElementById('time').innerText = new Date().toLocaleTimeString('id-ID', {hour12: false}); }, 1000);
+
+        // SYSTEM STATS SIMULATION
+        setInterval(() => {
+            const cpu = Math.floor(Math.random()*40+10); document.getElementById('cpu-bar').style.width = cpu+'%'; document.getElementById('cpu-val').innerText = cpu+'%';
+            const gpu = Math.floor(Math.random()*30+40); document.getElementById('gpu-bar').style.width = gpu+'%'; document.getElementById('gpu-val').innerText = gpu+'°C';
+            const net = Math.floor(Math.random()*50+10); document.getElementById('net-bar').style.width = net+'%'; document.getElementById('net-val').innerText = net+'ms';
+            const ram = (Math.random()*2+2).toFixed(1); document.getElementById('ram-bar').style.width = (ram*15)+'%'; document.getElementById('ram-val').innerText = ram+'GB';
+        }, 2000);
+
+        // LOGIN SYSTEM
         function login() {
-            const val = document.getElementById('key').value;
-            const valid = ["2026"];
-            if (valid.includes(val.toUpperCase())) {
+            const val = document.getElementById('key').value.toUpperCase();
+            if (["2026"].includes(val)) {
+                playSound(880, 'sine', 0.2); 
+                setTimeout(() => playSound(1200, 'sine', 0.4), 100);
+                showNotif("ACCESS_GRANTED");
                 document.getElementById('auth-section').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-            } else { alert("ACCESS DENIED! JOIN SALURAN DULU BRO."); }
+            } else {
+                playSound(150, 'sawtooth', 0.5);
+                showNotif("ERR: INVALID_KEY");
+                alert("ACCESS DENIED! BELI KEY KE SAYA DULU.");
+            }
         }
     </script>
 </body>
-</html>
+    </html>
